@@ -1,29 +1,19 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { listEmployees } from '../services/EmployeeService'
 
 const ListEmployeeComplonent = () => {
 
-  const dummyData=[
-    {
-      "id":1,
-      "firstName":"Omkar",
-      "lastName":"Singh",
-      "email":"omkar@gmail.com"
-    },
-    {
-      "id":2,
-      "firstName":"Ram",
-      "lastName":"Lal",
-      "email":"ram@gmail.com"
-    },
-    {
-      "id":3,
-      "firstName":"Shyam",
-      "lastName":"Pandey",
-      "email":"shyam@gmail.com"
-    }
-  ]
+      const [employees,setEmployees] =  useState([])  
 
-
+      useEffect(()=>{
+            listEmployees().then((response)=>{
+              // Access 'empVo' inside the data object
+            console.log("Checking data:", response.data.empVo);
+              setEmployees(response.data.empVo);
+            }).catch(error=>{
+              console.error(error);
+            }) 
+      },[])
 
   return (
     <div className='container'>
@@ -31,20 +21,22 @@ const ListEmployeeComplonent = () => {
         <table className='table table-striped table-bordered'>
             <thead>
                  <tr>
-                    <th>Id</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email Id</th>
+                    <th> Id</th>
+                    <th> Dept Id</th>
+                    <th> Name</th>
+                    <th> Job</th>
+                    <th> Salary</th>
                   </tr>
             </thead>
             <tbody>
                  {
-                     dummyData.map(employee=>
+                     employees.map(employee=>
                           <tr  key={employee.id}>
                               <td>{employee.id} </td>
-                              <td>{employee.firstName} </td>
-                              <td>{employee.lastName} </td>
-                              <td>{employee.email} </td>
+                              <td>{employee.deptId} </td>
+                              <td>{employee.name} </td>
+                              <td>{employee.job} </td>
+                              <td>{employee.salary} </td>
                           </tr>
                       
                      )
