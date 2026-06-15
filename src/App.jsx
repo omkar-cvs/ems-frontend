@@ -4,15 +4,26 @@ import HeaderComponent from './components/HeaderComponent'
 
 import ListEmployeeComplonent from './components/ListEmployeeComplonent'
 import HelloWorld from './HelloWorld'
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
 function App() {
- 
+  
   return (
     <>
-       <HeaderComponent/>
-       <ListEmployeeComplonent/>
-       <FooterComponent/>
+      <BrowserRouter>
+            <HeaderComponent/>
+                <Routes>
+                      {/* // http://localhost:3000 */}
+                      <Route path='/' element={ <ListEmployeeComplonent/> }> </Route>
+                      {/* // http://localhost:3000/employees */}
+                      <Route path='/employees' element={ <ListEmployeeComplonent/> }> </Route>
+
+                      
+                </Routes>  
+           
+            <FooterComponent/>
+      </BrowserRouter>
+
     </>
   )
 }
