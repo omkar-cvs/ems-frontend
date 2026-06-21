@@ -7,22 +7,6 @@ const EmployeeComponent = () => {
   const  [job,setJob] = useState('')
   const  [salary,setSalary] = useState('')
 
-const handleName = (e) => {
-    setName(e.target.value);
- }
-
-const handleJob = (e) => {
-    setJob(e.target.value);
-}
-
-const handleSalary = (e) => {
-    setSalary(e.target.value);
- }
-
-const handleDeptId = (e) => {
-    setDeptId(e.target.value);
-}
-
 function saveEmmployee(e){
     e.preventDefault();
 
@@ -48,7 +32,7 @@ function saveEmmployee(e){
                                     name='name'
                                     value={name}
                                     className='form-control'
-                                    onChange={handleName}
+                                    onChange={(e) => setName(e.target.value)}
                               >                              
                               </input>
 
@@ -62,7 +46,7 @@ function saveEmmployee(e){
                                     name='job'
                                     value={job}
                                     className='form-control'
-                                    onChange={handleJob}
+                                    onChange={(e) =>  setJob(e.target.value)}
                               >                              
                               </input>
                           </div>
@@ -75,7 +59,7 @@ function saveEmmployee(e){
                                     name='salary'
                                     value={salary}
                                     className='form-control'
-                                    onChange={handleSalary}
+                                    onChange={(e) => setSalary(e.target.value)}
                               >                              
                               </input>
                           </div>
@@ -88,7 +72,7 @@ function saveEmmployee(e){
                                     name='deptId'
                                     value={deptId}
                                     className='form-control'
-                                    onChange={handleDeptId}
+                                    onChange={(e) => setDeptId(e.target.value)}
                               >                              
                               </input>
                           </div>
