@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { createEmployee } from '../services/EmployeeService'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { createEmployee, getEmployee } from '../services/EmployeeService'
+import { useNavigate, useParams} from 'react-router-dom'
+
 
 const EmployeeComponent = () => {
 
@@ -8,6 +9,8 @@ const EmployeeComponent = () => {
   const  [name,setName] = useState('')
   const  [job,setJob] = useState('')
   const  [salary,setSalary] = useState('')
+
+  const {id} =useParams();
 
   const [errors,setErrors] = useState({           
         name:'',
@@ -17,6 +20,23 @@ const EmployeeComponent = () => {
   })
 
   const navigator= useNavigate();
+  
+  useEffect(()=> {
+        if (id) {
+            getEmployee(id).then((response) => {
+                // response.data.empVo is the list, [0] is the employee object
+                const employeeData = response.data.empVo[0]; 
+                
+                setName(employeeData.name);
+                setJob(employeeData.job);
+                setSalary(employeeData.salary);
+                setDeptId(employeeData.deptId);
+            }).catch(error => {
+                console.error("Error fetching employee:", error);
+        });
+    }
+
+  },[id])
 
 function saveEmmployee(e){
     e.preventDefault();
@@ -76,12 +96,22 @@ function validateForm(){
     return valid;
 }
 
+function pageTitle(){
+    if(id){
+          return <h2 className='text-center'> Update Employee</h2>
+    }else{
+          return <h2 className='text-center'> Add Employee</h2>
+    }
+}
+
   return (
     <div className='container'>
       <br></br>
         <div className='row'>
               <div className='card col-md-6 offset-md-3 offset-md-3'>
-                  <h2 className='text-center'>Add Employee</h2>
+                    {
+                      pageTitle()
+                    }
                   <div className='card-body'>
                       <form>
                         

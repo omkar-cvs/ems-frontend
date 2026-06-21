@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { listEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
 
-const ListEmployeeComplonent = () => {
+const ListEmployeeComponent = () => {
 
       const [employees,setEmployees] =  useState([])  
 
@@ -22,6 +22,11 @@ function addNewEmployee(){
       navigator('/add-employee')
 }
 
+function updateEmployee(id){
+  navigator(`/edit-employee/${id}`)
+
+}
+
   return (
     <div className='container'>
         <h2 className='text-center'>List of Employees</h2>
@@ -34,6 +39,7 @@ function addNewEmployee(){
                     <th> Name</th>
                     <th> Job</th>
                     <th> Salary</th>
+                    <th> Actions </th>
                   </tr>
             </thead>
             <tbody>
@@ -45,6 +51,9 @@ function addNewEmployee(){
                               <td>{employee.name} </td>
                               <td>{employee.job} </td>
                               <td>{employee.salary} </td>
+                              <td>
+                                 <button className='btn btn-info' onClick={()=> updateEmployee(employee.id)} >Update</button>
+                              </td>
                           </tr>
                       
                      )
@@ -56,4 +65,4 @@ function addNewEmployee(){
   )
 }
 
-export default ListEmployeeComplonent
+export default ListEmployeeComponent
