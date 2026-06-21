@@ -7,19 +7,19 @@ const EmployeeComponent = () => {
   const  [job,setJob] = useState('')
   const  [salary,setSalary] = useState('')
 
-function handleName(e){
+const handleName = (e) => {
     setName(e.target.value);
  }
 
-function handleJob(e){
+const handleJob = (e) => {
     setJob(e.target.value);
 }
 
-function handleSalary(e){
+const handleSalary = (e) => {
     setSalary(e.target.value);
  }
 
-function handleDeptId(e){
+const handleDeptId = (e) => {
     setDeptId(e.target.value);
 }
 
