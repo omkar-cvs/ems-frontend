@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { createEmployee, getEmployee } from '../services/EmployeeService'
+import { createEmployee, getEmployee, updateEmployee } from '../services/EmployeeService'
 import { useNavigate, useParams} from 'react-router-dom'
 
 
@@ -38,12 +38,12 @@ const EmployeeComponent = () => {
 
   },[id])
 
-function saveEmmployee(e){
+function saveOrUpdateEmmployee(e){
     e.preventDefault();
 
    if(validateForm()){
               const employee={
-                  empId: null, // Set this if you have an ID, otherwise null
+                  empId: id, // Set this if you have an ID, otherwise null
                   empVo: {
                       name: name,
                       job: job,
@@ -53,10 +53,23 @@ function saveEmmployee(e){
               }
               console.log(employee);
 
-              createEmployee(employee).then((response)=>{
-                  console.log(response.data);
-                  navigator('/employees');
-              })
+              if(id){
+                  updateEmployee(employee).then((response) => {
+                       console.log(response.data);
+                       navigator('/employees');                       
+                  }).catch(error => {
+                       console.error(error);
+                  })
+              }else{
+                  createEmployee(employee).then((response)=>{
+                       console.log(response.data);
+                       navigator('/employees');
+                  }).catch(error => {
+                       console.error(error);
+                  }) 
+              }
+
+             
     }
 }
  
@@ -77,14 +90,14 @@ function validateForm(){
         valid=false;
     }
 
-    if(salary.trim()){
+    if(String(salary).trim()){
         errorsCopy.salary='';
     }else{
         errorsCopy.salary='First salary is required';
         valid=false;
     }
 
-    if(deptId.trim()){
+    if(String(deptId).trim()){
         errorsCopy.deptId='';
     }else{
         errorsCopy.deptId='First dept id is required';
@@ -171,7 +184,7 @@ function pageTitle(){
                               </input>
                               { errors.deptId && <div className='invalid-feedback'> {errors.deptId}  </div> }
                           </div>
-                          <button className='btn btn-success' onClick={saveEmmployee} >Submit</button>
+                          <button className='btn btn-success' onClick={saveOrUpdateEmmployee} >Submit</button>
                       </form>
                   </div>
               </div> 
